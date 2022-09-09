@@ -4,6 +4,8 @@ body {
     margin-top: 150px;
     font-size: 30px;
     font-family: arial;
+    width: 100vw;
+    height: 100vh;
 }
 
 h1 {
