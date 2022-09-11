@@ -1,48 +1,63 @@
-let start = document.getElementById("start");
-let stop = document.getElementById("stop");
-let reset = document.getElementById("reset");
+let minutos = document.getElementById("minutos"),
+    segundos = document.getElementById("segundos"),
+    iniciar = document.getElementById("start"),
+    parar = document.getElementById("stop"),
+    reiniciar = document.getElementById("reset"),
+    minutosVar,
+    segundosVar,
+    intervalo;
 
-let segundos = document.getElementById("segundos");
-let decimos = document.getElementById("decimos");
+iniciar.onclick = function() {
+    clearInterval(intervalo);   
+    intervalo = setInterval(diminuirUmaUnidade, 1000);
+    minutosVar = 24;
+    minutos.innerHTML = minutosVar;
+    segundosVar = 59;
+    segundos.innerHTML = segundosVar;
+}
 
-let intervalo;
-let dec = 0;
-let seg = 0;
-
-start.onclick = function() {
+parar.onclick = function() {
     clearInterval(intervalo);
-    intervalo = setInterval(timer, 10);
-    
+}
+
+reiniciar.onclick = function() {
+    clearInterval(intervalo);
+    minutosVar = "25";
+    minutos.innerHTML = minutosVar;
+    segundosVar = "00";
+    segundos.innerHTML = segundosVar;
     
 }
 
-stop.onclick = function() {
-    clearInterval(intervalo);
-    
-    
-}
-
-
-reset.onclick = function() {
-    clearInterval(intervalo);
-    dec = 0;
-    seg = 0;
-    decimos.innerHTML="00";
-    segundos.innerHTML="00";
-    
-}
-
-function timer() {
-    dec++;
-    if(dec==99) {
-        dec=0;
-        seg++;
-        if(seg<=9){
-        segundos.innerHTML="0" + seg;
+function diminuirUmaUnidade() {
+    if(segundosVar > 10){
+        segundosVar--;
+        segundos.innerHTML = segundosVar;
+    }
+    else if(segundosVar == 10){
+        segundosVar--;
+        segundos.innerHTML = "0" + segundosVar;
+    }
+    else if (segundosVar < 10 && segundosVar > 0) {
+        segundosVar--;
+        segundos.innerHTML = "0" + segundosVar;
+    }
+    else if (segundosVar == 0) {
+        if (minutosVar == 0) {
+            clearInterval(intervalo);
+            alert("Lucy, acabou feia!!!!")
         }
-        else {
-        segundos.innerHTML=seg;
+        else{
+            segundosVar = 59;
+            segundos.innerHTML = segundosVar;
+            minutosVar--;
+            if (minutosVar < 10) {
+                minutos.innerHTML = "0" + minutosVar;
+            }
+            else {
+            minutos.innerHTML = minutosVar;
+            }
         }
     }
-    dec = (dec<10) ? decimos.innerHTML="0" + dec : decimos.innerHTML=dec;
-}
+} 
+
